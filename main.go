@@ -6,61 +6,12 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"strings"
 )
 
-// External API Models
-type TransactionCounts struct {
-	Total           int `json:"total"`
-	MintAccessToken int `json:"mint_access_token"`
-	CreateCourse    int `json:"create_course"`
-}
-
-type AnalyticsAPIResponse struct {
-	Count TransactionCounts `json:"count"`
-}
-
-type TransactionAPIResponse struct {
-	TxHash      string   `json:"tx_hash"`
-	Types       []string `json:"types"`
-	SubmittedAt string   `json:"submitted_at"`
-}
-
-// Data Models
-type Analytics struct {
-	TotalTransactions int
-	ActiveAddresses   int
-	TotalBlocks       int
-	NetworkLoad       int
-	AvgBlockTime      int
-	TotalValue        string
-	CourseCount       int
-	ProjectCount      int
-}
-
-type Transaction struct {
-	Hash      string
-	Timestamp string
-	Amount    string
-	Types     []string
-}
-
-type Contribution struct {
-	ID        string
-	Title     string
-	Timestamp string
-	Author    string
-}
-
-type SearchResult struct {
-	Type     string
-	ID       string
-	Title    string
-	Subtitle string
-	Details  string
-	Link     string
-}
+// ... (existing struct definitions) ...
 
 func main() {
 	// Router
@@ -80,7 +31,11 @@ func main() {
 	mux.Handle("/assets/", http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
 
 	// Server config
-	addr := ":8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	addr := ":" + port
 	log.Printf("🚀 Server starting on http://localhost%s", addr)
 
 	server := &http.Server{
