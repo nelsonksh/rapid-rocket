@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Andamio Protocol Explorer API
+  description: A Go + HTMX + Tailwind rewrite of the Andamio Explorer
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+paths:
+  /:
+    get:
+      summary: Home Page
+      description: Returns the main dashboard HTML page
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+  /api/analytics:
+    get:
+      summary: Get Analytics Fragment
+      description: Returns HTML fragment for the stats grid
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+  /api/transactions:
+    get:
+      summary: Get Transactions Fragment
+      description: Returns HTML fragment for recent transactions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+  /api/contributions:
+    get:
+      summary: Get Contributions Fragment
+      description: Returns HTML fragment for recent contributions
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+  /search:
+    get:
+      summary: Search
+      description: Returns HTML fragment for search results based on query 'q'
+      parameters:
+        - in: query
+          name: q
+          schema:
+            type: string
+          description: Search query (transaction hash, address, block number)
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
